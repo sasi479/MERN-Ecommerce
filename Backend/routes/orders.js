@@ -5,8 +5,8 @@ const {
   createOrder, 
   getUserOrders, 
   getOrderById,
-  createRazorpayOrder, 
-  verifyRazorpayPayment  
+  // createRazorpayOrder, 
+  // verifyRazorpayPayment  
 } = require('../controllers/orderController');
 
 router.use(auth);
@@ -18,8 +18,8 @@ router.get('/:id', getOrderById);
 
 // Razorpay routes
 
-router.post('/razorpay', auth, createRazorpayOrder);
-router.post('/verify', auth, verifyRazorpayPayment);
+// router.post('/razorpay', auth, createRazorpayOrder);
+// router.post('/verify', auth, verifyRazorpayPayment);
 
 
 module.exports = router;

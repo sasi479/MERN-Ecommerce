@@ -45,28 +45,6 @@ const login = async (req, res) => {
     }
 
 
-    /*
-
-  1  front end--login 
-
-  2  backend end -details - checking - if valid-> reseponse { user,token }
-
-  3 authentication 
-
-  username,password
-
-
-
-
-jwt authentication:
-------------------------
-send token to frontend on  suuccessful login
-
-
-  4 authorization
-
-
-  */
     const token = generateToken(user._id);
 
     res.json({

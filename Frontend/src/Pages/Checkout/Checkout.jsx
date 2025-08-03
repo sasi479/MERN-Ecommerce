@@ -91,65 +91,7 @@ function Checkout() {
     }
   };
 
-  const handleRazorpayPayment = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.post(
-        // 'http://localhost:3000/api/payments/razorpay',
-        'http://localhost:3000/api/orders/razorpay',
-        { amount: total * 100 },
-        { headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` } }
-      );
 
-      const options = {
-         // key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-        key: "rzp_test_KbsLJkx8xl6WJZ",
-        amount: data.amount,
-        currency: 'INR',
-        name: 'Your Store Name',
-        description: 'Order Payment',
-        order_id: data.id,
-        handler: async function (response) {
-          try {
-            const verifyResponse = await axios.post(
-              'http://localhost:3000/api/orders/verify',
-              // 'http://localhost:3000/api/payments/verify',
-              {
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-                items: items.map(item => ({
-                  productId: item.id,
-                  title: item.title,
-                  image: item.image,
-                  quantity: item.quantity,
-                  price: item.price,
-                })),
-                address: selectedAddress,
-                paymentMethod: 'razorpay',
-                totalAmount: total,
-              },
-              { headers: { Authorization: `Bearer ${token}` } }
-            );
-            dispatch(addOrder(verifyResponse.data));
-            dispatch(clearCart());
-            toast.success('Payment successful! Order placed.');
-            navigate('/profile/orders');
-          } catch (error) {
-            toast.error('Payment verification failed!');
-          }
-        },
-        prefill: { name: user.name, email: user.email, contact: user.phone },
-        theme: { color: '#3399cc' },
-      };
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
-    } catch (error) {
-      toast.error('Failed to initiate payment');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (items.length === 0) {
     return (
@@ -241,7 +183,7 @@ function Checkout() {
               <h5 className="mb-0">Payment Method</h5>
             </div>
             <div className="card-body">
-              <div className="form-check mb-2">
+              {/* <div className="form-check mb-2">
                 <input
                   className="form-check-input"
                   type="radio"
@@ -253,7 +195,7 @@ function Checkout() {
                 <label className="form-check-label" htmlFor="card">
                   Razorpay (UPI, Card, Net Banking)
                 </label>
-              </div>
+              </div> */}
               <div className="form-check">
                 <input
                   className="form-check-input"

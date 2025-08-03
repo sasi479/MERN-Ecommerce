@@ -1,0 +1,17 @@
+
+nav{
+  box-shadow: rgb(221,221,221) 0px 1px 0px;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+ #cart-count {
+  border-radius: 50%;
+  background-color: gold;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: -7px;
+  right: -9px;
+}
+

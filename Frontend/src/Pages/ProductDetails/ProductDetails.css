@@ -1,0 +1,4 @@
+.product-details img {
+   max-height: 35rem;
+   object-fit: contain;
+}

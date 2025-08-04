@@ -32,11 +32,20 @@ const createOrder = async (req, res) => {
 
     await order.save();
 
-    if (paymentMethod === 'cod') {
+    let emailSent= true
+    try{
       await sendOrderConfirmationEmail(req.user.email, order);
+         
     }
 
-    res.status(201).json(order);
+    catch(err){
+      emailSent=false
+
+    }
+
+    res.status(201).json(
+      {order,emailSent,message:emailSent?"order Craeted and email sent successfully":"order Craeted and email couldn't send"}
+    );
   } catch (error) {
     console.error('Error creating order:', error);
     res.status(500).json({ error: 'Failed to create order' });
@@ -75,72 +84,9 @@ const getOrderById = async (req, res) => {
 
 
 
-// const createRazorpayOrder = async (req, res) => {
-//   try {
-//     const { amount } = req.body;
-//     if (!amount) {
-//       return res.status(400).json({ error: 'Amount is required' });
-//     }
-
-//     const options = {
-//       amount: amount, 
-//       currency: 'INR',
-//       receipt: `receipt_${Math.random() * 1000}`,
-//       payment_capture: 1,
-//     };
-//     const order = await razorpay.orders.create(options);
-//     res.status(201).json(order);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Something went wrong' });
-//   }
-// };
-
-
-// const verifyRazorpayPayment = async (req, res) => {
-//   try {
-//     const { razorpay_order_id, razorpay_payment_id, razorpay_signature, items, address, totalAmount } = req.body;
-
-//     const expectedSignature = crypto
-//       .createHmac('sha256', process.env.RAZORPAY_SECRET) 
-//       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
-//       .digest('hex');
-
-//     if (expectedSignature !== razorpay_signature) {
-//       return res.status(400).json({ success: false, error: 'Invalid payment signature' });
-//     }
-//     const order = new Order({
-//       user: req.user._id,
-//       items,
-//       totalAmount,
-//       shippingAddress: address,
-//       paymentMethod: 'razorpay',
-//       status: 'Paid',
-//       razorpayOrderId: razorpay_order_id,
-//       razorpayPaymentId: razorpay_payment_id,
-//       razorpaySignature: razorpay_signature
-//     });
-
-//     await order.save();
-
-//     await sendOrderConfirmationEmail(req.user.email, order);
-
-//     res.json({ success: true, order });
-
-//   } catch (error) {
-//     console.error('Payment verification failed:', error);
-//     res.status(500).json({ success: false, error: 'Payment verification failed' });
-//   }
-// };
-
-
-
-
 module.exports = {
   createOrder,
   getUserOrders,
   getOrderById,
-  // createRazorpayOrder,
-  // verifyRazorpayPayment
 
 };

@@ -36,9 +36,9 @@ const Wishlist = () => {
       <h2 className="mb-4 fw-bold text-center">My Wishlist</h2>
       <div className="row g-4">
         {wishlistData.items.map((item) => (
-          <div key={item.id} className="col-sm-6 col-md-4 col-lg-3">
+          <div key={item._id} className="col-sm-6 col-md-4 col-lg-3">
             <div className="card h-100 shadow-sm">
-                <Link to={`/product/${item.id}`}>
+                <Link to={`/product/${item._id}`}>
                   <img
                     src={item.image}
                     className="card-img-top p-3"
@@ -47,7 +47,7 @@ const Wishlist = () => {
                   />
                 </Link>
               <div className="card-body d-flex flex-column">
-                <Link to={`/product/${item.id}`} >
+                <Link to={`/product/${item._id}`} >
                   <h5 className="reset-a card-title text-truncate">
                     {item.title}
                   </h5>

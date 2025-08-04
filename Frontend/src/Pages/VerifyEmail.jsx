@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 function VerifyEmail() {
   const { token } = useParams();
@@ -11,7 +12,7 @@ function VerifyEmail() {
   useEffect(() => {
     const verifyEmail = async () => {
       try {
-        await axios.get(`http://localhost:3000/api/auth/verify-email/${token}`);
+        await axios.get(`${baseUrl}/api/auth/verify-email/${token}`);
         toast.success('Email verified successfully! Please login.');
         setTimeout(() => navigate('/login'), 2000);
       } catch (error) {

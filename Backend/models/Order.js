@@ -55,7 +55,8 @@ const mongoose = require('mongoose');
 
 const orderItemSchema = new mongoose.Schema({
   productId: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product',
     required: true
   },
   title: {
@@ -99,7 +100,7 @@ const orderSchema = new mongoose.Schema({
   },
   paymentMethod: {
     type: String,
-    enum: ['card', 'cod', 'razorpay'], 
+    enum: [ 'cod'], 
     required: true
   },
   paymentStatus: {
@@ -107,15 +108,7 @@ const orderSchema = new mongoose.Schema({
     enum: ['pending', 'paid', 'failed'],
     default: 'pending'
   },
-  razorpayOrderId: {
-    type: String
-  },
-  razorpayPaymentId: {
-    type: String
-  },
-  razorpaySignature: {
-    type: String
-  }
+ 
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', orderSchema);

@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export const getProducts = createAsyncThunk(
   'products/getProducts',
   async () => {
     try {
-      const response = await fetch('https://fakestoreapi.com/products');
+      const response = await fetch(`${baseUrl}/api/products`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

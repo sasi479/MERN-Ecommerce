@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const index = state.items.findIndex((item) => item.id === action.payload.id);
+      const index = state.items.findIndex((item) => item._id === action.payload._id);
 
       if (index !== -1) {
         state.items[index].quantity += 1;
@@ -31,7 +31,7 @@ import { toast } from 'react-toastify';
 
     updateQuantity: (state, action) => {
       const { item, newQuantity } = action.payload;
-      const index = state.items.findIndex((cartItem) => cartItem.id === item.id);
+      const index = state.items.findIndex((cartItem) => cartItem._id === item._id);
 
       if (index !== -1) {
         const currentQuantity = state.items[index].quantity;
@@ -53,7 +53,7 @@ import { toast } from 'react-toastify';
     },
 
     removeFromCart: (state, action) => {
-      const index = state.items.findIndex(item => item.id === action.payload.id);
+      const index = state.items.findIndex(item => item._id === action.payload._id);
 
       if (index !== -1) {
         const itemToRemove = state.items[index];

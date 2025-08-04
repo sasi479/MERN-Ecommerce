@@ -3,6 +3,7 @@ import {  useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom"; 
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -12,7 +13,7 @@ function Orders() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/orders",{
+        const response = await axios.get(baseUrl+"/api/orders",{
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -84,7 +85,7 @@ function Orders() {
                               <div className="d-flex align-items-center gap-3 w-75">
                               <Link to={`/product/${item.productId}`}>
                                   <img
-                                    src={item.image}
+                                    src={`${baseUrl}/${item.image}`}
                                     alt={item.title}
                                     className="rounded"
                                     style={{

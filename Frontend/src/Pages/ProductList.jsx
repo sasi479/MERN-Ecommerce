@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -19,7 +20,7 @@ function ProductList() {
   }, []);
   const fetchProducts = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/products`);
+      const res = await axios.get(`${baseUrl}/api/products`);
       setProducts(res.data);
     } catch {
       toast.error("Failed to fetch products");
@@ -28,7 +29,7 @@ function ProductList() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure to delete this product?")) return;
     try {
-      await axios.delete(`http://localhost:3000/api/products/${id}`, {
+      await axios.delete(`${baseUrl}/api/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Product deleted");
@@ -61,7 +62,7 @@ function ProductList() {
             <tr key={prod._id}>
               <td>
                 <img
-                  src={`http://localhost:3000/${prod.image}`}
+                  src={`${baseUrl}/${prod.image}`}
                   alt="product"
                   width="60"
                 />

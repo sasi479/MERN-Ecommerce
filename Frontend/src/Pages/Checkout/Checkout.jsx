@@ -5,6 +5,7 @@ import { clearCart } from "../../Store/cartSlice";
 import { addOrder, setCredentials } from "../../Store/authSlice";
 import axios from "axios";
 import { toast } from "react-toastify";
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 function Checkout() {
   const cartData = useSelector((state) => state.cart);
@@ -12,6 +13,8 @@ function Checkout() {
   const dispatch = useDispatch();
   const { items } = useSelector((state) => state.cart);
   const { user, token } = useSelector((state) => state.auth);
+
+  console.log(user)
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -25,7 +28,9 @@ function Checkout() {
     const fetchAddresses = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/addresses",
+          baseUrl+"/api/addresses",
+
+          
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -63,10 +68,10 @@ function Checkout() {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:3000/api/orders",
+        baseUrl+"/api/orders",
         {
           items: items.map((item) => ({
-            productId: item.id,
+            productId: item._id,
             title: item.title,
             image: item.image,
             quantity: item.quantity,
@@ -162,7 +167,7 @@ function Checkout() {
               <h5 className="mb-0">Delivery Address</h5>
             </div>
             <div className="card-body">
-              {user.addresses.map((address, index) => (
+              {user?.addresses?.map((address, index) => (
                 <div key={index} className="form-check mb-2">
                   <input
                     className="form-check-input"

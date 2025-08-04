@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { setCredentials } from '../Store/authSlice';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -33,7 +34,7 @@ function Register() {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/register', {
+      const response = await axios.post(baseUrl+'/api/auth/register', {
         name: formData.name,
         email: formData.email,
         password: formData.password

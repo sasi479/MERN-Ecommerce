@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom'; // Add useLocation
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { setCredentials } from '../Store/authSlice';
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 function Address() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ function Address() {
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/addresses', {
+        const response = await axios.get(baseUrl+'/api/addresses', {
           headers: { Authorization: `Bearer ${token}` },
         });
         dispatch(setCredentials({ user: { ...user, addresses: response.data }, token }));
@@ -52,7 +53,7 @@ function Address() {
     setLoading(true);
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/addresses',
+        baseUrl+'/api/addresses',
         newAddress,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -82,7 +83,7 @@ function Address() {
     setLoading(true);
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/addresses/${editAddress._id}`,
+        `${baseUrl}/api/addresses/${editAddress._id}`,
         editAddress,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -100,7 +101,7 @@ function Address() {
     setLoading(true);
     try {
       const addressId = user.addresses[index]._id;
-      await axios.delete(`http://localhost:3000/api/addresses/${addressId}`, {
+      await axios.delete(`${baseUrl}/api/addresses/${addressId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const updatedAddresses = user.addresses.filter((_, i) => i !== index);

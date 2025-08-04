@@ -8,9 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import "./Cart.css";
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const Cart = () => {
   const cartData = useSelector((state) => state.cart);
+
   const navigate = useNavigate();
   const { user } = useSelector(state => state.auth);
   const dispatch = useDispatch();
@@ -59,15 +61,15 @@ const Cart = () => {
       <div className="row p-3">
         <div className="col-lg-8 col-12 my-1" id="cart-container">
           {cartData.items.map((item) => (
-            <div key={item.id} className="row cart-item-card mb-3 bg-light p-3">
+            <div key={item._id} className="row cart-item-card mb-3 bg-light p-3">
               <div className="col-12 col-md-3 mb-3 mb-md-0">
-                <Link to={`/product/${item.id}`}>
-                  <img src={item.image} alt={item.title} className="w-100" />
+                <Link to={`/product/${item._id}`}>
+                  <img src={`${baseUrl}/${item.image}`} alt={item.title} className="w-100" />
                 </Link>
               </div>
               <div className="col-12 col-md-9">
                 <div className="d-flex justify-content-between align-items-center mb-2">
-                  <Link to={`/product/${item.id}`} className="w-75">
+                  <Link to={`/product/${item._id}`} className="w-75">
                     <h5 className="reset-a card-title text-truncate">
                       {item.title}
                     </h5>

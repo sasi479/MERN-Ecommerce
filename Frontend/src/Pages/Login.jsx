@@ -4,6 +4,8 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { setCredentials } from "../Store/authSlice";
 import { toast } from "react-toastify";
 import axios from "axios";
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
 
 export default function Login() {
   const user = useSelector((state) => state.auth.user);
@@ -36,7 +38,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        baseUrl+"/api/auth/login",
         formData
       );
       dispatch(setCredentials(response.data));

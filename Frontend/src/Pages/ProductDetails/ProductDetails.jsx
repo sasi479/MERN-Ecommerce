@@ -4,6 +4,7 @@ import "./ProductDetails.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../Store/cartSlice";
 import { toggleWishlist } from "../../Store/wishlistSlice";
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
@@ -11,11 +12,11 @@ const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist.items);
-  const isWishlisted = wishlist.some((item) => item?.id === product?.id);
+  const isWishlisted = wishlist.some((item) => item?._id === product?._id);
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+        const response = await fetch(`${baseUrl}/api/products/${id}`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -57,7 +58,7 @@ const ProductDetails = () => {
     <div className="container py-3">
       <div className="row product-details">
         <div className="col-md-4 mb-5 ">
-          <img className="w-100" src={product?.image} alt="" />
+          <img className="w-100" src={`${baseUrl}/${product.image}`} alt="" />
         </div>
         <div className="col-md-7">
           <h1 className="mb-3">{product?.title}</h1>

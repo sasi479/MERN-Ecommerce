@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 
 function ProductForm() {
@@ -29,11 +30,11 @@ function ProductForm() {
 
   const fetchProduct = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/products/${id}`);
+      const res = await axios.get(`${baseUrl}/api/products/${id}`);
       setForm({ ...res.data, image: null });
 
       if (res.data.image) {
-        setPreviewImage(`http://localhost:3000/${res.data.image}`);
+        setPreviewImage(`${baseUrl}/${res.data.image}`);
       }
     } catch {
       toast.error("Failed to load product");
@@ -67,7 +68,7 @@ function ProductForm() {
 
     try {
       if (id) {
-        await axios.put(`http://localhost:3000/api/products/${id}`, formData, {
+        await axios.put(`${baseUrl}/api/products/${id}`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
@@ -75,7 +76,7 @@ function ProductForm() {
         });
         toast.success("Product updated");
       } else {
-        await axios.post("http://localhost:3000/api/products", formData, {
+        await axios.post(baseUrl+"/api/products", formData, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",

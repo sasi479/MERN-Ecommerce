@@ -2,24 +2,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart } from "../../Store/cartSlice";
 import { toggleWishlist } from "../../Store/wishlistSlice";
-
+const baseUrl = import.meta.env.VITE_BASE_URL;
 const ProductCard=({ product }) =>{
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist.items);
-  const isWishlisted = wishlist.some((item) => item.id === product.id);
+  const isWishlisted = wishlist.some((item) => item._id === product._id);
 
   return (
     <div className="card h-100">
-        <Link to={`/product/${product.id}`} state={product}>
+        <Link to={`/product/${product._id}`} state={product}>
           <img
-            src={product.image}
+            src={`${baseUrl}/${product.image}`}
             className="card-img-top p-3"
             alt={product.title}
             style={{ height: "200px", objectFit: "contain" }}
           />
         </Link>
       <div className="card-body d-flex flex-column">
-        <Link to={`/product/${product.id}`} state={product}>
+        <Link to={`/product/${product._id}`} state={product}>
           <h5 className="reset-a card-title text-truncate">{product.title}</h5>
         </Link>
         <p className="card-text text-truncate">{product.description}</p>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ function ForgotPassword() {
     setLoading(true);
 
     try {
-      await axios.post('http://localhost:3000/api/auth/forgot-password', { email });
+      await axios.post(baseUrl+'/api/auth/forgot-password', { email });
       setSent(true);
       toast.success('Password reset instructions sent to your email');
     } catch (error) {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 function ResetPassword() {
   const [password, setPassword] = useState('');
@@ -20,7 +21,7 @@ function ResetPassword() {
 
     setLoading(true);
     try {
-      await axios.post('http://localhost:3000/api/auth/reset-password', {
+      await axios.post(baseUrl+'/api/auth/reset-password', {
         token,
         password
       });

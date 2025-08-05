@@ -13,8 +13,6 @@ import Register from "./Pages/Register";
 import Address from "./Pages/Address";
 import Orders from "./Pages/Orders";
 import Profile from "./Pages/Profile";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
 import VerifyEmail from "./pages/VerifyEmail";
 
 import { ToastContainer} from 'react-toastify';
@@ -40,8 +38,6 @@ const App=() =>{
           <Route path="/profile" element={<Profile />} />
           <Route path="profile/address" element={<Address />} />
           <Route path="profile/orders" element={<Orders />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />
-          <Route path="reset-password/:token" element={<ResetPassword />} />
           <Route path="verify-email/:token" element={<VerifyEmail />} />
           <Route path="/admin/products" element={<ProductList />} />
           <Route path="/admin/products/new" element={<ProductForm />} />
